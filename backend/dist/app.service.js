@@ -12,6 +12,13 @@ let AppService = class AppService {
     getHello() {
         return 'Hello World!';
     }
+    checkHealth() {
+        return {
+            status: "success",
+            message: "Api health testig",
+            health: "Active"
+        };
+    }
 };
 exports.AppService = AppService;
 exports.AppService = AppService = __decorate([
