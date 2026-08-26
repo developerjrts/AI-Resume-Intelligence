@@ -12,7 +12,9 @@ async function bootstrap() {
       "https://ai-resume-intelligence-woad.vercel.app/",
       "https://ai-resume-intelligence-woad.vercel.app"
     ],
-    credentials: true
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true,        
   })
 
   app.use(cookieParser());
