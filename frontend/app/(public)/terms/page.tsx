@@ -66,7 +66,7 @@ const Terms = () => {
 
       <Card className="flex flex-col gap-2 p-4">
         <h2 className='md:text-2xl text-xl font-semibold  '>9. Disclaimer of Warranties</h2>
-        <p className='text-base leading-relaxed uppercase text-xs tracking-wider font-medium text-slate-600 dark:text-slate-400'>
+        <p className='text-base leading-relaxed uppercase tracking-wider font-medium text-slate-600 dark:text-slate-400'>
           The service is provided on an "as-is" and "as-available" basis. We expressly disclaim all warranties of any kind, whether express or implied, including but not limited to the implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We make no warranty that the platform will secure you employment or pass automatic applicant tracking systems (ATS).
         </p>
       </Card>
