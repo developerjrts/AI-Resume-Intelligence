@@ -8,11 +8,6 @@ export enum UserRole {
     ADMIN = "admin"
 }
 
-export enum AuthProvider {
-    LOCAL = "local",
-    GOOGLE = "google",
-    GITHUB = "github"
-}
 
 @Schema({_id: false})
 export class SocialLinks {
@@ -50,7 +45,6 @@ export class User {
         unique: true,
         lowercase: true,
         trim: true,
-        index: true
     })
     email!: string;
 
@@ -58,7 +52,6 @@ export class User {
         unique: true,
         lowercase: true,
         trim: true,
-        sparse: true
     })
     username?: string;
 
@@ -69,23 +62,6 @@ export class User {
         select: false
     })
     password?: string;
-
-    @Prop({
-        type: String,
-        enum: Object.values(AuthProvider),
-        default: AuthProvider.LOCAL
-    })
-    authProvider!: AuthProvider;
-
-    @Prop({
-        select: false
-    })
-    googleId?: string;
-
-    @Prop({
-        select: false
-    })
-    githubId?: string;
 
     @Prop({
         default: false
@@ -116,7 +92,8 @@ export class User {
     bio?: string
 
     @Prop({
-        type: SocialLinks
+        type: SocialLinks,
+        default: {}
     })
     socialLinks?: SocialLinks
 

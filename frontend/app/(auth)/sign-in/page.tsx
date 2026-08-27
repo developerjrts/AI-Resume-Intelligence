@@ -1,5 +1,5 @@
 "use client"
-import api from '@/api/api'
+import api, { url } from '@/api/api'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import TextField from '@/components/TextField'
@@ -7,6 +7,7 @@ import { isAxiosError } from 'axios'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FaLock } from 'react-icons/fa6'
+import { IoLogoGithub } from 'react-icons/io'
 import { MdAlternateEmail } from "react-icons/md"
 
 const SignIn = () => {
@@ -36,8 +37,12 @@ const SignIn = () => {
     }
   }
 
+  const github = () => {
+    window.open(`${url}/user/github`)
+  }
+
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex p-2 justify-center items-center min-h-screen">
       <Card
       className='flex flex-col gap-4'
       >
@@ -70,10 +75,23 @@ const SignIn = () => {
         onChange={(e) => setPassword(e.target.value)}
         />
 
+        <Link
+        href={`/verify?username=${username}`}
+        className='font-semibold text-blue-500 text-right'
+        >Forgot Password?</Link>
+
         <Button
         onClick={signIn}
         >
           Sign In
+        </Button>
+
+        <Button
+        className="bg-white text-[#333] shadow-sm p-2 rounded-none flex justify-center items-center gap-2"
+        onClick={github}
+        >
+          <IoLogoGithub color='#333' size={24} />
+          Continue with GitHub
         </Button>
 
       <p className="text-center">Don't have an account? <Link href={"/sign-up "} className='text-blue-500 font-semibold' >Sign Up</Link></p>

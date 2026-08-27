@@ -9,7 +9,7 @@ const Button = (props: props) => {
   return (
     <button
     className={cn(
-        "bg-blue-500 py-2 px-4 rounded-md active:bg-blue-600 text-white",
+        "bg-blue-500 py-2 px-4 rounded-sm cursor-pointer active:bg-blue-600 text-white",
         props.className
     )}
     {...props}

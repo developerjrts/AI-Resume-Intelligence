@@ -1,5 +1,5 @@
 "use client"
-import api from '@/api/api'
+import api, { url } from '@/api/api'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import TextField from '@/components/TextField'
@@ -7,6 +7,7 @@ import { isAxiosError } from 'axios'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FaUser, FaLock } from 'react-icons/fa6'
+import { IoLogoGithub } from 'react-icons/io'
 import { MdAlternateEmail, MdEmail } from "react-icons/md"
 
 const SignUp = () => {
@@ -20,7 +21,7 @@ const SignUp = () => {
     console.log("API calling");
     
     try {
-      const {data} = await api.post("/user/sign-in", {
+      const {data} = await api.post("/user/sign-up", {
         name,
         username,
         email,
@@ -40,10 +41,14 @@ const SignUp = () => {
     }
   }
 
+  const github = () => {
+    window.open(`${url}/user/github`)
+  }
+
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex p-2 justify-center items-center min-h-screen">
       <Card
-      className='flex flex-col gap-4'
+      className='flex flex-col gap-2 md:gap-4'
       >
        <div className='text-center'>
          <h1
@@ -51,12 +56,12 @@ const SignUp = () => {
         >
           Create your account
         </h1>
-        <p>
+        <p className='md:block hidden'>
           Build a stronger resume with AI-powered insights.
         </p>
        </div>
 
-        <div className="flex gap-4">
+        <div className="flex md:flex-row flex-col gap-4">
         <TextField
         value={name}
         startIcon={<FaUser color='#333 ' />}
@@ -93,10 +98,25 @@ const SignUp = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
+      <p className="text-center">
+        By creating account you're accepting our 
+      <Link href={"/terms "} className='text-blue-500 font-semibold' > Terms of Service </Link>
+       and
+      <Link href={"/privacy "} className='text-blue-500 font-semibold' > Privacy Policy </Link>
+      </p>
+
         <Button
         onClick={signUp}
         >
           Sign Up
+        </Button>
+
+        <Button
+          className="bg-white text-[#333] shadow-sm p-2 rounded-none flex justify-center items-center gap-2"
+          onClick={github}
+        >
+          <IoLogoGithub color='#333' size={24} />
+          Continue with GitHub
         </Button>
 
       <p className="text-center">Already have an account? <Link href={"/sign-in"} className='text-blue-500 font-semibold' >Sign In</Link></p>

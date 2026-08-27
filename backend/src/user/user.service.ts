@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/user.schema';
 import { Model } from 'mongoose';
@@ -83,6 +83,61 @@ export class UserService {
         return {
             message: "Logged In",
             token
+        }
+
+    }
+
+    async githubCallback(user: any) {
+
+        const email = user.email
+
+        if (!email) {
+            throw new UnauthorizedException("No email provided by GitHub account.")
+        }
+
+        try {
+            let dbUser = await this.userModel.findOne({email});
+            if (!dbUser) {
+                console.log("This account is not regestered.");
+                
+                dbUser = await this.userModel.create({
+                    email,
+                    username: user.username,
+                    avatar: user.avatar,
+                    name: user.name,
+                    isVerified: true,
+
+                })
+            }
+            if (!dbUser) {
+                throw new InternalServerErrorException("Failed to create or find GitHub user.")
+            }
+            if (!dbUser.isVerified) {
+                dbUser = await this.userModel.findOneAndUpdate({email}, {
+                    isVerified: true,
+                })
+            }
+            if (!dbUser) {
+                throw new InternalServerErrorException("Failed to update GitHub user verification.")
+            }
+
+        const payload = {
+            sub: dbUser._id,
+            username: user.username
+        };
+
+        const token = await this.jwtService.signAsync(payload);
+
+        return {
+            message: "Authenticaed via github",
+            token,
+            user
+        }
+
+            
+        } catch (error) {
+            console.log(error);
+            throw new InternalServerErrorException("Authentication via GitHub failed.")
         }
 
     }

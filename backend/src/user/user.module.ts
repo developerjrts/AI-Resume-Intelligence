@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
-import { Mongoose } from 'mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schema/user.schema';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
+import { PassportModule } from '@nestjs/passport';
+import { GithubStrategy } from './strategies/github.strategy';
 
 @Module({
   imports: [
@@ -21,10 +22,20 @@ import { ConfigService } from '@nestjs/config';
         expiresIn: '1m'
       }
     })
+  }),
+  PassportModule.registerAsync({
+    imports: [ConfigModule],
+    useFactory: async(configService: ConfigService) => ({
+      defaultStrategy: "jwt"
+    }),
+    inject: [ConfigService]
   })
 ],
 
   controllers: [UserController],
-  providers: [UserService]
+  providers: [
+    UserService,
+    GithubStrategy
+  ]
 })
 export class UserModule {}
