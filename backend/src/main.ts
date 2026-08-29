@@ -14,9 +14,9 @@ async function bootstrap() {
       ? [frontendUrl, backendUrl] 
       : ["http://localhost:3000", "http://localhost:5001"],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
-    allowedHeaders: 'Content-Type,Authorization',
+    allowedHeaders: 'Content-Type,Authorization,Cookie', 
     credentials: true,        
-  })
+})
 
   app.use(cookieParser());
   await app.listen(port);

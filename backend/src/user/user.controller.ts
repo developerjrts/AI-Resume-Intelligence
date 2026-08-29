@@ -69,8 +69,7 @@ export class UserController {
     async githubCallback(
         @Req() req: any,
         @Res({passthrough: true}) res: Response 
-    )  {
-
+    ) {
         const result = await this.userService.githubCallback(req.user);
 
         res.cookie("session_code", result.token, {
@@ -78,13 +77,13 @@ export class UserController {
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             secure: process.env.NODE_ENV === "production" ? true : false,
             domain: process.env.COOKIE_DOMAIN || undefined,
-            maxAge: 15 * 24 * 60 * 60 * 1000
+            maxAge: 15 * 24 * 60 * 60 * 1000,
+            path: '/' 
         })
 
-        const frontendUrl = this.configService.getOrThrow<string>("FRONTEND_URL");
-
-        return res.redirect(`${frontendUrl}/dashboard`)
-    }
+            const frontendUrl = this.configService.getOrThrow<string>("FRONTEND_URL");
+            return res.redirect(`${frontendUrl}/dashboard`)
+        }
 
 
 }
