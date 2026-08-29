@@ -5,12 +5,16 @@ import Card from '@/components/Card'
 import TextField from '@/components/TextField'
 import { isAxiosError } from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FaUser, FaLock } from 'react-icons/fa6'
 import { IoLogoGithub } from 'react-icons/io'
 import { MdAlternateEmail, MdEmail } from "react-icons/md"
+import { toast } from 'sonner'
 
 const SignUp = () => {
+
+  const router = useRouter()
 
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -27,13 +31,13 @@ const SignUp = () => {
         email,
         password
       })
-
-    console.log(data);
+    toast.success(data.message)
+    router.push("/dashboard")
 
     } catch (error) {
       if (isAxiosError(error)) {
         const errMessage = error.response?.data.message
-        alert(errMessage)
+        toast.error(errMessage)
       }
     } finally {
       console.log("API called");

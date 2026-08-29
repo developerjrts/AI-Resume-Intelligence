@@ -5,15 +5,19 @@ import Card from '@/components/Card'
 import TextField from '@/components/TextField'
 import { isAxiosError } from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FaLock } from 'react-icons/fa6'
 import { IoLogoGithub } from 'react-icons/io'
 import { MdAlternateEmail } from "react-icons/md"
+import {toast} from 'sonner'
 
 const SignIn = () => {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const router = useRouter()
 
   const signIn = async() => {
     console.log("API calling");
@@ -24,12 +28,13 @@ const SignIn = () => {
         password
       })
 
-    console.log(data);
+    toast.success(data.message)
+    router.push("/dashboard")
 
     } catch (error) {
       if (isAxiosError(error)) {
         const errMessage = error.response?.data.message
-        alert(errMessage)
+        toast.error(errMessage)
       }
     } finally {
       console.log("API called");
