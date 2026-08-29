@@ -71,9 +71,9 @@ export class UserController {
 
          res.cookie("session_code", result.token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production" ? true : false,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-            maxAge: 30 * 24 * 60 * 60 * 1000
+            secure: process.env.NODE_ENV === "production" ? true : false,
+            maxAge: 15 * 24 * 60 * 60 * 1000
         })
 
         const frontendUrl = this.configService.getOrThrow<string>("FRONTEND_URL");
