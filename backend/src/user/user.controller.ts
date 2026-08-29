@@ -26,6 +26,7 @@ export class UserController {
             httpOnly: true,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             secure: process.env.NODE_ENV === "production" ? true : false,
+            domain: process.env.COOKIE_DOMAIN || undefined,
             maxAge: 15 * 24 * 60 * 60 * 1000
         })
 
@@ -48,6 +49,7 @@ export class UserController {
             httpOnly: true,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             secure: process.env.NODE_ENV === "production" ? true : false,
+            domain: process.env.COOKIE_DOMAIN || undefined,
             maxAge: 15 * 24 * 60 * 60 * 1000
         })
 
@@ -71,10 +73,11 @@ export class UserController {
 
         const result = await this.userService.githubCallback(req.user);
 
-         res.cookie("session_code", result.token, {
+        res.cookie("session_code", result.token, {
             httpOnly: true,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             secure: process.env.NODE_ENV === "production" ? true : false,
+            domain: process.env.COOKIE_DOMAIN || undefined,
             maxAge: 15 * 24 * 60 * 60 * 1000
         })
 
