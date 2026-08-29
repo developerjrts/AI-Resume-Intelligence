@@ -24,10 +24,11 @@ export class UserController {
 
         res.cookie("session_code", token, {
             httpOnly: true,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             secure: process.env.NODE_ENV === "production" ? true : false,
-            sameSite: 'lax',
-            maxAge: 30 * 24 * 60 * 60 * 1000
+            maxAge: 15 * 24 * 60 * 60 * 1000
         })
+
 
         return {
             message
@@ -43,12 +44,13 @@ export class UserController {
     ) {
         const {token, message} = await this.userService.signIn(loginUserDto)
 
-         res.cookie("session_code", token, {
+        res.cookie("session_code", token, {
             httpOnly: true,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             secure: process.env.NODE_ENV === "production" ? true : false,
-            sameSite: 'lax',
-            maxAge: 30 * 24 * 60 * 60 * 1000
+            maxAge: 15 * 24 * 60 * 60 * 1000
         })
+
 
         return {
             message
