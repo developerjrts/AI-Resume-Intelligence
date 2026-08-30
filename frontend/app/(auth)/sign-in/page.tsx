@@ -14,31 +14,33 @@ import {toast} from 'sonner'
 
 const SignIn = () => {
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const router = useRouter()
 
   const signIn = async() => {
-    console.log("API calling");
-    
+    setLoading(true)
+    const toastId = toast.loading("Verifying...")
     try {
       const {data} = await api.post("/user/sign-in", {
         username,
         password
       })
 
+    toast.dismiss(toastId)
     toast.success(data.message)
-    router.push("/dashboard")
+    localStorage.setItem("session_code", data.token)
 
     } catch (error) {
       if (isAxiosError(error)) {
         const errMessage = error.response?.data.message
+        toast.dismiss(toastId)
         toast.error(errMessage)
       }
     } finally {
-      console.log("API called");
-      
+      setLoading(false)
     }
   }
 
@@ -92,7 +94,8 @@ const SignIn = () => {
         </Button>
 
         <Button
-        className="bg-white text-[#333] shadow-sm p-2 rounded-none flex justify-center items-center gap-2"
+        disabled={loading}
+        className="bg-white border border-[#333] text-[#333] shadow-sm p-2 rounded-sm flex justify-center items-center gap-2"
         onClick={github}
         >
           <IoLogoGithub color='#333' size={24} />
