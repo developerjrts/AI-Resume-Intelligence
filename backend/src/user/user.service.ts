@@ -97,6 +97,12 @@ export class UserService {
 
         try {
             let dbUser = await this.userModel.findOne({email});
+
+            await this.userModel.findOneAndUpdate({email}, {
+                bio: user.bio,
+                avatar: user.avatar
+            })
+
             if (!dbUser) {
                 console.log("This account is not regestered.");
                 

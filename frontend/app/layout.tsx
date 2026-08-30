@@ -25,6 +25,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <div 
+        className="w-80 h-80 bg-purple-500 absolute blur-[100px] opacity-25 top-0 left-0"
+        />
+        <div 
+        className="w-80 h-80 bg-blue-500 absolute blur-[100px] opacity-25 bottom-0 right-0"
+        />
         {children}
         <Toaster position="top-right" richColors /> 
       </body>

@@ -34,7 +34,8 @@ const SignUp = () => {
       })
     toast.dismiss(toastId)
     toast.success(data.message)
-    localStorage.setItem("session_code", data.token)
+    localStorage.setItem("session_code", data.token);
+    router.replace("/dashboard")
 
     } catch (error) {
       if (isAxiosError(error)) {
@@ -127,7 +128,7 @@ const SignUp = () => {
                  Continue with GitHub
                </Button>
 
-      <p className="text-center">Already have an account? <Link href={"/sign-in"} className='text-blue-500 font-semibold' >Sign In</Link></p>
+      <p className="text-center">Already have an account? <Link href={"/auth/sign-in"} className='text-blue-500 font-semibold' >Sign In</Link></p>
       </Card>
     </div>
   )
