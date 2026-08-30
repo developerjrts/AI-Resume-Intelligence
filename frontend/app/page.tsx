@@ -6,26 +6,14 @@ import { useEffect, useState } from 'react';
 const Landing = () => {
 
    const router = useRouter();
-   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
     useEffect(() => {
       const token = localStorage.getItem("session_code");
   
       if (token) {
         router.replace("/dashboard")
-      } else {
-        setIsAuthenticated(false)
-      }
+      } 
   
     }, [router]);
-  
-      if (!isAuthenticated) {
-          return (
-              <div className="flex min-h-screen items-center justify-center">
-                  <p>Loading...</p>
-              </div>
-          )
-      }
 
 
   return (
