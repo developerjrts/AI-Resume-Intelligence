@@ -1,9 +1,9 @@
 "use client"
-import React, {useEffect} from 'react'
+import React, {useEffect, Suspense} from 'react'
 import {useRouter, useSearchParams} from "next/navigation"
 import { toast } from 'sonner'
 
-const page = () => {
+function AuthCallBackContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -30,6 +30,22 @@ const page = () => {
     >
         Signing you in...
     </div>
+  )
+}
+
+const page = () => {
+  return (
+    <Suspense
+    fallback={
+    <div 
+    className="flex items-center justify-center min-h-screen"
+    >
+      Signing you in...
+    </div>
+    }
+    >
+      <AuthCallBackContent />
+    </Suspense>
   )
 }
 
