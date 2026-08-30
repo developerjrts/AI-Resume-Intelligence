@@ -83,7 +83,7 @@ export class UserController {
         })
 
             const frontendUrl = this.configService.getOrThrow<string>("FRONTEND_URL");
-            return res.redirect(`${frontendUrl}?message=Authorization sucessfull&session_code=${result.token}`)
+            return res.redirect(`${frontendUrl}/dashboard?message=Authorization sucessfull&session_code=${result.token}`)
         }
 
 
